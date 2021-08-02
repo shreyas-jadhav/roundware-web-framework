@@ -29,3 +29,4 @@ export declare class TrackOptions implements ITrackOptions {
     get fadeOutLowerBound(): number;
     get fadeOutUpperBound(): number;
 }
+//# sourceMappingURL=TrackOptions.d.ts.map

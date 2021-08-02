@@ -1,25 +1,24 @@
-import { IAssetPool } from "./types/assetPool";
-import { IRoundware } from "./types/roundware";
+import { AssetPool } from "./assetPool";
+import { Playlist } from "./playlist";
+import { Roundware } from "./roundware";
+import { SpeakerTrack } from "./speaker_track";
 import { Coordinates, IMixParams } from "./types";
-import { IMixer } from "./types/mixer";
-import { ISpeakerTrack } from "./types/speaker-track";
-import { IPlaylist } from "./types/playlist";
 export declare const GeoListenMode: Readonly<{
     DISABLED: number;
     MANUAL: number;
     AUTOMATIC: number;
 }>;
-export declare class Mixer implements IMixer {
+export declare class Mixer {
     playing: boolean;
     private _windowScope;
     private _client;
     private _prefetchSpeakerAudio;
     mixParams: IMixParams;
-    playlist: IPlaylist | undefined;
-    assetPool: IAssetPool;
-    speakerTracks: ISpeakerTrack[];
+    playlist: Playlist | undefined;
+    assetPool: AssetPool;
+    speakerTracks: SpeakerTrack[];
     constructor({ client, windowScope, listenerLocation, prefetchSpeakerAudio, filters, sortMethods, mixParams, }: {
-        client: IRoundware;
+        client: Roundware;
         windowScope: Window;
         listenerLocation: Coordinates;
         prefetchSpeakerAudio: boolean | unknown;
@@ -28,10 +27,23 @@ export declare class Mixer implements IMixer {
         mixParams: object;
     });
     updateParams({ listenerLocation, ...params }: IMixParams): void;
+    /**
+     * @param  {number} trackId
+     */
     skipTrack(trackId: number): void;
     skip(): void;
+    /**
+     * @param  {number} trackId
+     */
     replayTrack(trackId: number): void;
+    /**
+     * @returns string
+     */
     toString(): string;
     initContext(): void;
+    /**
+     * @returns boolean - playing
+     */
     toggle(): boolean;
 }
+//# sourceMappingURL=mixer.d.ts.map

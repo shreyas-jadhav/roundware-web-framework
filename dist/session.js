@@ -55,7 +55,7 @@ var Session = /*#__PURE__*/function () {
       return "Roundware Session #" + sessionId;
     }
     /** Make an asynchronous API call to establish a session with the Roundware server
-     * @return {Promise} represents the pending API call
+     * @return {Promise} sessionId
      **/
 
   }, {

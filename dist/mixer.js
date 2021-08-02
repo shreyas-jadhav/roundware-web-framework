@@ -21,13 +21,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Mixer = exports.GeoListenMode = void 0;
 
-var _speaker_track = require("./speaker_track");
+var _assetPool = require("./assetPool");
 
 var _playlist = require("./playlist");
 
-var _utils = require("./utils");
+var _speaker_track = require("./speaker_track");
 
-var _assetPool = require("./assetPool");
+var _utils = require("./utils");
 
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
@@ -90,7 +90,7 @@ var Mixer = /*#__PURE__*/function () {
     this.assetPool = new _assetPool.AssetPool({
       assets: assets,
       timedAssets: timedAssets,
-      // @ts-ignore
+      // @ts-ignore here it asks for a function
       filters: filters,
       sortMethods: sortMethods,
       mixParams: this.mixParams
@@ -133,6 +133,10 @@ var Mixer = /*#__PURE__*/function () {
         }
       }
     }
+    /**
+     * @param  {number} trackId
+     */
+
   }, {
     key: "skipTrack",
     value: function skipTrack(trackId) {
@@ -141,11 +145,19 @@ var Mixer = /*#__PURE__*/function () {
   }, {
     key: "skip",
     value: function skip() {}
+    /**
+     * @param  {number} trackId
+     */
+
   }, {
     key: "replayTrack",
     value: function replayTrack(trackId) {
       if (this.playlist) this.playlist.replay(trackId);
     }
+    /**
+     * @returns string
+     */
+
   }, {
     key: "toString",
     value: function toString() {
@@ -194,6 +206,10 @@ var Mixer = /*#__PURE__*/function () {
         this.updateParams(this.mixParams);
       }
     }
+    /**
+     * @returns boolean - playing
+     */
+
   }, {
     key: "toggle",
     value: function toggle() {

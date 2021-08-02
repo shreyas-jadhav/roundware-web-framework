@@ -1,7 +1,6 @@
-import { ISession } from "./types";
-import { IApiClient } from "./types/api-client";
+import { ApiClient } from "./api-client";
 /** Responsible for establishing a session with the Roundware server **/
-export declare class Session implements ISession {
+export declare class Session {
     sessionId: number | undefined;
     /** Create a new Session
      * @param {object} navigator - provides access to the userAgent string
@@ -11,12 +10,13 @@ export declare class Session implements ISession {
      * @param {apiClient} options.apiClient - the API client object to use for server API calls
      **/
     constructor(navigator: Window[`navigator`], newProjectId: number, geoListenEnablement: boolean, options: {
-        apiClient: IApiClient;
+        apiClient: ApiClient;
     });
     /** @returns {String} human-readable representation of this session **/
     toString(): string;
     /** Make an asynchronous API call to establish a session with the Roundware server
-     * @return {Promise} represents the pending API call
+     * @return {Promise} sessionId
      **/
     connect(): Promise<number>;
 }
+//# sourceMappingURL=session.d.ts.map

@@ -179,16 +179,18 @@ var PlaylistAudiotrack = /*#__PURE__*/function () {
   }, {
     key: "holdGain",
     value: function holdGain() {
-      var gain = this.gainNode.gain,
-          currentTime = this.audioContext.currentTime;
-      gain.cancelScheduledValues(currentTime);
+      var _this$gainNode;
+
+      var currentTime = this.audioContext.currentTime;
+      (_this$gainNode = this.gainNode) === null || _this$gainNode === void 0 ? void 0 : _this$gainNode.gain.cancelScheduledValues(currentTime);
     }
   }, {
     key: "setZeroGain",
     value: function setZeroGain() {
-      var gain = this.gainNode.gain,
-          currentTime = this.audioContext.currentTime;
-      gain.setValueAtTime(NEARLY_ZERO, currentTime); // http://alemangui.github.io/blog//2015/12/26/ramp-to-value.html
+      var _this$gainNode2;
+
+      var currentTime = this.audioContext.currentTime;
+      (_this$gainNode2 = this.gainNode) === null || _this$gainNode2 === void 0 ? void 0 : _this$gainNode2.gain.setValueAtTime(NEARLY_ZERO, currentTime); // http://alemangui.github.io/blog//2015/12/26/ramp-to-value.html
     } // exponentialRampToValueAtTime sounds more gradual for fading in
 
   }, {
@@ -218,13 +220,17 @@ var PlaylistAudiotrack = /*#__PURE__*/function () {
   }, {
     key: "rampGain",
     value: function rampGain(finalVolume, durationSeconds) {
+      var _this$gainNode3;
+
       var rampMethod = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "exponentialRampToValueAtTime";
-      var gain = this.gainNode.gain,
-          currentTime = this.audioContext.currentTime;
+      var currentTime = this.audioContext.currentTime;
       console.log("\t[ramping ".concat(this, " gain to ").concat(finalVolume.toFixed(2), " (").concat(durationSeconds.toFixed(1), "s - ").concat(rampMethod, ")]"));
+      var gain = (_this$gainNode3 = this.gainNode) === null || _this$gainNode3 === void 0 ? void 0 : _this$gainNode3.gain;
+      if (!gain) return;
 
       try {
         gain.setValueAtTime(gain.value, currentTime); // http://alemangui.github.io/blog//2015/12/26/ramp-to-value.html
+        // @ts-ignore library failed to provide index signature
 
         gain[rampMethod](finalVolume, currentTime + durationSeconds);
         return true;
@@ -262,7 +268,11 @@ var PlaylistAudiotrack = /*#__PURE__*/function () {
         var file = newAsset.file,
             start = newAsset.start;
         console.log("\t[loading next asset ".concat(this, ": ").concat(file, "]"));
-        audioElement.src = file;
+
+        if (typeof file == "string") {
+          audioElement.src = file;
+        }
+
         audioElement.currentTime = start >= NEARLY_ZERO ? start : NEARLY_ZERO; // value but must fininite
 
         this.audioElement = audioElement;

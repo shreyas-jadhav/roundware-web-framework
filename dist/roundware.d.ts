@@ -1,11 +1,10 @@
-import { ITimedAssetData } from "./types";
-import { IEnvelope } from "./types/envelope";
-import { IAssetData, Coordinates, IUiConfig, IAudioData } from "./types";
-import { IRoundware, IRoundwareConstructorOptions } from "./types/roundware";
-import { IMixer } from "./types/mixer";
-import { ISpeakerData } from "./types/speaker";
+import { AssetPool } from "./assetPool";
+import { Envelope } from "./envelope";
+import { Mixer } from "./mixer";
+import { Coordinates, IAssetData, IAudioData, ITimedAssetData, IUiConfig } from "./types";
 import { IAudioTrackData } from "./types/audioTrack";
-import { IAssetPool } from "./types/assetPool";
+import { IRoundwareConstructorOptions } from "./types/roundware";
+import { ISpeakerData } from "./types/speaker";
 export * from "./assetFilters";
 export { GeoListenMode } from "./mixer";
 /** This class is the primary integration point between Roundware's server and your application
@@ -40,7 +39,7 @@ export { GeoListenMode } from "./mixer";
 
   roundware.play(startListening).catch(handleError);
 **/
-export declare class Roundware implements IRoundware {
+export declare class Roundware {
     readonly windowScope: Window;
     private _serverUrl;
     private _projectId;
@@ -85,7 +84,7 @@ export declare class Roundware implements IRoundware {
     set onUpdateAssets(callback: CallableFunction);
     set onPlayAssets(callback: CallableFunction);
     _triggerOnPlayAssets(): void;
-    get currentlyPlayingAssets(): IAssetData[] | undefined;
+    get currentlyPlayingAssets(): any[] | undefined;
     enableGeolocation(mode: number): void;
     disableGeolocation(): void;
     /** Initiate a connection to Roundware
@@ -93,13 +92,13 @@ export declare class Roundware implements IRoundware {
     connect(): Promise<{
         uiConfig: IUiConfig;
     }>;
-    get mixParams(): any;
+    get mixParams(): {};
     getAssets(options: object): Promise<unknown[]>;
-    get assetPool(): IAssetPool | undefined;
+    get assetPool(): AssetPool | undefined;
     getAssetsFromPool(assetFilter: CallableFunction, extraParams?: {}): Promise<IAssetData[]>;
     updateAssetPool(): Promise<void>;
     loadAssetPool(): Promise<IAssetData[]>;
-    activateMixer(activationParams?: {}): Promise<IMixer>;
+    activateMixer(activationParams?: {}): Promise<Mixer>;
     /** Create or resume the audio stream
      * @see Stream.play **/
     play(firstPlayCallback?: (value: Coordinates) => any): Promise<any>;
@@ -140,9 +139,10 @@ export declare class Roundware implements IRoundware {
     /** Explicitly make a new envelope that you can attach multiple assets to by
      calling the `Envelope.upload` method. This is the main way to add text,
      photo, and video assets to an envelope. */
-    makeEnvelope(): Promise<IEnvelope>;
+    makeEnvelope(): Promise<Envelope>;
     findTagDescription(tagId: string, tagType?: string): any;
     vote(assetId: string, voteType: string, value: unknown): Promise<unknown>;
     getAsset(id: string): Promise<IAssetData>;
     getEnvelope(id: string | number): Promise<unknown>;
 }
+//# sourceMappingURL=roundware.d.ts.map

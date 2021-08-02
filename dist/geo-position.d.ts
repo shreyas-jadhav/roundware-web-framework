@@ -1,10 +1,10 @@
-import { Coordinates, IGeoPosition, GeoPositionOptions } from "./types";
+import { Coordinates, GeoPositionOptions } from "./types";
 /** Responsible for tracking the user's position, when geo listening is enabled and the browser is capable
  * @property {Boolean} isEnabled - whether or not the geo positioning system is enabled and available
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/Using_geolocation **/
-export declare class GeoPosition implements IGeoPosition {
+export declare class GeoPosition {
     /** Create a new GeoPosition.
-     * @param {Object} navigator - provides access to geolocation system
+     * @param {Window[`navigator`]} navigator - provides access to geolocation system
      * @param {Object} options - parameters for initializing this GeoPosition
      * @param {Boolean} [options.geoListenMode = GeoListenMode.DISABLED] - whether or not to attempt to use geolocation
      * @param {Boolean} [options.defaultCoords] */
@@ -22,6 +22,9 @@ export declare class GeoPosition implements IGeoPosition {
     toString(): string;
     /** @return {Object} coordinates - last known coordinates received from the geolocation system (defaults to latitude 1, longitude 1) **/
     getLastCoords(): Coordinates;
+    /**
+     * @param  {CallableFunction} geoUpdateCallback
+     */
     connect(geoUpdateCallback: CallableFunction): void;
     /** Attempts to get an initial rough geographic location for the listener, then sets up a callback
      * to update the position.
@@ -34,3 +37,4 @@ export declare class GeoPosition implements IGeoPosition {
      * @return {Promise} Represents the attempt to get an initial estimate of the user's position **/
     waitForInitialGeolocation(): Promise<Coordinates>;
 }
+//# sourceMappingURL=geo-position.d.ts.map

@@ -1,19 +1,19 @@
 /** Responsible for identifying the user to the Roundware server and retrieving an auth token **/
-import { IApiClient } from "./types/api-client";
-import { IUser, IUserResponse } from "./types/user";
-export declare class User implements IUser {
+import { ApiClient } from "./api-client";
+import { IUserResponse } from "./types/user";
+export declare class User {
     /** Create a User
      * @param {Object} options - Various configuration parameters for this user
      * @param {apiClient} options.apiClient - the API client object to use for server API calls
      * @param {String} options.deviceId - this value distinguishes a particular user, who may be anonymous, to the server; by default we will fingerprint the browser to get this value, but you can supply your own value (useful if your app has a preexisting authorization scheme)
      * @param {String} [options.clientType = "web"]
      **/
-    apiClient: IApiClient;
+    apiClient: ApiClient;
     deviceId: string;
     clientType: string;
     userName: string;
     constructor({ apiClient, deviceId, clientType, }: {
-        apiClient: IApiClient;
+        apiClient: ApiClient;
         deviceId: string;
         clientType: string;
     });
@@ -24,3 +24,4 @@ export declare class User implements IUser {
      * @returns {Promise} represents the pending API call **/
     connect(): Promise<IUserResponse | {}>;
 }
+//# sourceMappingURL=user.d.ts.map

@@ -1,39 +1,37 @@
-import { IPlaylist } from "./types/playlist";
-import { IRoundware } from "./types/roundware";
+import { PlaylistAudiotrack } from "./playlistAudioTrack";
 import { Point } from "@turf/helpers";
-import { IAssetPool } from "./types/assetPool";
 import { IAudioContext } from "standardized-audio-context";
 import { IAudioTrackData } from "./types/audioTrack";
-import { ITrack } from "./types";
-export declare class Playlist implements IPlaylist {
+import { IMixParams } from "./types";
+import { Roundware } from "./roundware";
+import { AssetPool } from "./assetPool";
+export declare class Playlist {
     listenerPoint: Point;
     playingTracks: IAudioTrackData[];
-    assetPool: IAssetPool;
+    assetPool: AssetPool;
     playing: boolean;
     listenTagIds: number[];
-    _client: IRoundware;
+    _client: Roundware;
     _elapsedTimeMs: number;
     trackMap: Map<any, any>;
     trackIdMap: {};
     playlistLastStartedAt: Date | undefined;
     constructor({ client, audioTracks, listenerPoint, windowScope, assetPool, ...playlistTrackOptions }: {
-        client: IRoundware;
+        client: Roundware;
         audioTracks?: IAudioTrackData[];
         listenerPoint: Point;
         windowScope: Window;
-        assetPool: IAssetPool;
+        assetPool: AssetPool;
         audioContext?: IAudioContext;
     });
     get tracks(): any[];
     get currentlyPlayingAssets(): any[];
-    updateParams({ listenerPoint, listenTagIds, ...params }: {
-        listenerPoint: Point;
-        listenTagIds: number[];
-    }): void;
+    updateParams({ listenerPoint, listenTagIds, ...params }: IMixParams): void;
     play(): void;
     skip(trackId?: number): void;
     replay(trackId: number): void;
     pause(): void;
     get elapsedTimeMs(): number;
-    next(forTrack: ITrack): import("./types").IAssetData | undefined;
+    next(forTrack: PlaylistAudiotrack): import("./types").IAssetData | undefined;
 }
+//# sourceMappingURL=playlist.d.ts.map

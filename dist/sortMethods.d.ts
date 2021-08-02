@@ -16,3 +16,4 @@ Sort assets destructively, in descending order of current number of likes.
 */
 export declare function sortByLikes(assetsArray: IAssetData[]): void;
 export declare function sortByProjectDefault(ordering: string): (assetArray: IAssetData[]) => void;
+//# sourceMappingURL=sortMethods.d.ts.map

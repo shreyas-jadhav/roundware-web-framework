@@ -50,3 +50,4 @@ export declare const dateRangeFilter: () => (asset: IAssetData, { startDate, end
 export declare const roundwareDefaultFilterChain: (asset: IAssetData, { ...stateParams }: {
     [x: string]: any;
 }) => number | boolean;
+//# sourceMappingURL=assetFilters.d.ts.map

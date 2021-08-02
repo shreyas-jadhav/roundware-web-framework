@@ -30,6 +30,7 @@ var Envelope = /*#__PURE__*/function () {
    * @param {number} sessionId - identifies the session associated with this asset
    * @param {ApiClient} apiClient - the API client object to use for server API calls
    * @param {geoPosition} geoPosition -
+   * @param  {Roundware} roundware - roundware object
    **/
   function Envelope(sessionId, apiClient, geoPosition, roundware) {
     _classCallCheck(this, Envelope);

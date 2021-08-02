@@ -1,7 +1,6 @@
 import { IAssetData } from "../types";
-import { IAssetEnvelope } from "../types/mixer/AssetEnvelope";
 import { ITrackOptions } from "../types/mixer/TrackOptions";
-export declare class AssetEnvelope implements IAssetEnvelope {
+export declare class AssetEnvelope {
     asset: IAssetData;
     assetId: string | number | undefined;
     minDuration: number;
@@ -14,3 +13,4 @@ export declare class AssetEnvelope implements IAssetEnvelope {
     constructor(trackOptions: ITrackOptions, asset: IAssetData);
     toString(): string;
 }
+//# sourceMappingURL=AssetEnvelope.d.ts.map

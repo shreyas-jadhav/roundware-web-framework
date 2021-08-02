@@ -1,5 +1,5 @@
-import { IAssetData, IAssetSorter } from "./types";
-export declare class AssetSorter implements IAssetSorter {
+import { IAssetData } from "./types";
+export declare class AssetSorter {
     sortMethods: ((assetsArray: any) => void)[];
     constructor({ sortMethods, ordering, }: {
         sortMethods: any[];
@@ -7,3 +7,4 @@ export declare class AssetSorter implements IAssetSorter {
     });
     sort(assets: IAssetData[]): void;
 }
+//# sourceMappingURL=assetSorter.d.ts.map

@@ -9,7 +9,7 @@ require("core-js/modules/es.number.to-fixed.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.makeInitialTrackState = exports.LoadingState = void 0;
+exports.makeInitialTrackState = exports.WaitingForAssetState = exports.FadingOutState = exports.PlayingState = exports.FadingInState = exports.DeadAirState = exports.TimedTrackState = exports.LoadingState = void 0;
 
 var _AssetEnvelope = require("./mixer/AssetEnvelope");
 
@@ -105,6 +105,11 @@ var TimedTrackState = /*#__PURE__*/function () {
     this.trackOptions = trackOptions;
     this.timerId = null;
   }
+  /**
+   * @param  {number=0} nextStateSecs
+   * @returns number
+   */
+
 
   _createClass(TimedTrackState, [{
     key: "play",
@@ -127,6 +132,9 @@ var TimedTrackState = /*#__PURE__*/function () {
       this.setNextStateTimer(nextStateMs);
       return nextStateSecs;
     }
+    /**
+     */
+
   }, {
     key: "pause",
     value: function pause() {
@@ -139,12 +147,13 @@ var TimedTrackState = /*#__PURE__*/function () {
       var now = new Date();
       var timerId = this.timerId,
           _this$timerApproximat = this.timerApproximateEndingAtMs,
-          timerApproximateEndingAtMs = _this$timerApproximat === void 0 ? now : _this$timerApproximat,
+          timerApproximateEndingAtMs = _this$timerApproximat === void 0 ? now.getTime() : _this$timerApproximat,
           windowScope = this.windowScope;
 
       if (timerId) {
         windowScope.clearTimeout(timerId);
-        delete this.timerApproximateEndingAtMs;
+        delete this.timerApproximateEndingAtMs; // @ts-ignore
+
         var timeRemainingMs = Math.max(timerApproximateEndingAtMs - now.getTime(), 0);
         return timeRemainingMs;
       }
@@ -200,6 +209,8 @@ var TimedTrackState = /*#__PURE__*/function () {
   return TimedTrackState;
 }();
 
+exports.TimedTrackState = TimedTrackState;
+
 var DeadAirState = /*#__PURE__*/function (_TimedTrackState) {
   _inherits(DeadAirState, _TimedTrackState);
 
@@ -237,6 +248,8 @@ var DeadAirState = /*#__PURE__*/function (_TimedTrackState) {
 
   return DeadAirState;
 }(TimedTrackState);
+
+exports.DeadAirState = DeadAirState;
 
 var FadingInState = /*#__PURE__*/function (_TimedTrackState2) {
   _inherits(FadingInState, _TimedTrackState2);
@@ -297,6 +310,8 @@ var FadingInState = /*#__PURE__*/function (_TimedTrackState2) {
   return FadingInState;
 }(TimedTrackState);
 
+exports.FadingInState = FadingInState;
+
 var PlayingState = /*#__PURE__*/function (_TimedTrackState3) {
   _inherits(PlayingState, _TimedTrackState3);
 
@@ -353,6 +368,8 @@ var PlayingState = /*#__PURE__*/function (_TimedTrackState3) {
 
   return PlayingState;
 }(TimedTrackState);
+
+exports.PlayingState = PlayingState;
 
 var FadingOutState = /*#__PURE__*/function (_TimedTrackState4) {
   _inherits(FadingOutState, _TimedTrackState4);
@@ -412,6 +429,7 @@ var FadingOutState = /*#__PURE__*/function (_TimedTrackState4) {
   return FadingOutState;
 }(TimedTrackState);
 
+exports.FadingOutState = FadingOutState;
 var DEFAULT_WAITING_FOR_ASSET_INTERVAL_SECONDS = 10;
 
 var WaitingForAssetState = /*#__PURE__*/function (_TimedTrackState5) {
@@ -455,6 +473,8 @@ var WaitingForAssetState = /*#__PURE__*/function (_TimedTrackState5) {
 
   return WaitingForAssetState;
 }(TimedTrackState);
+
+exports.WaitingForAssetState = WaitingForAssetState;
 
 var makeInitialTrackState = function makeInitialTrackState(track, trackOptions) {
   var startWithSilence = trackOptions.startWithSilence;

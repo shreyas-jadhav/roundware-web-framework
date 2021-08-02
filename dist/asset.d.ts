@@ -1,12 +1,12 @@
-import { IApiClient } from "./types/api-client";
-import { IAsset } from "./types/asset";
+import { ApiClient } from "./api-client";
 export declare const PATH: string;
-export declare class Asset implements IAsset {
+export declare class Asset {
     private _projectId;
     private _apiClient;
     constructor(projectId: number, { apiClient }: {
-        apiClient: IApiClient;
+        apiClient: ApiClient;
     });
     toString(): string;
     connect<T>(data?: {}): Promise<T>;
 }
+//# sourceMappingURL=asset.d.ts.map

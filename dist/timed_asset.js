@@ -42,6 +42,11 @@ var TimedAsset = /*#__PURE__*/function () {
     value: function toString() {
       return "Roundware TimedAssets (#".concat(this._projectId, ")");
     }
+    /**
+     * @param  {object} {...data}
+     * @returns Promise<ITimedAssetData[]>
+     */
+
   }, {
     key: "connect",
     value: function () {

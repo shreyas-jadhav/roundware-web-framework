@@ -159,10 +159,12 @@ var AssetPool = /*#__PURE__*/function () {
       var topPriorityRanking = rankingGroups.sort()[0]; // play least-recently played assets first
       // @ts-ignore
 
-      var priorityAssets = rankedAssets[topPriorityRanking] || [];
+      var priorityAssets = rankedAssets[topPriorityRanking] || []; // @ts-ignore not sure why sort is used on type object
+
       priorityAssets.sort(function (a, b) {
         return b.playCount - a.playCount;
-      });
+      }); // @ts-ignore
+
       var nextAsset = priorityAssets.pop();
       if (nextAsset) nextAsset.playCount++;
       return nextAsset;

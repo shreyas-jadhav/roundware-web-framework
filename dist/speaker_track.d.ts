@@ -1,4 +1,3 @@
-import { ISpeakerTrack } from "./types/speaker-track";
 import { IAudioContext, IGainNode } from "standardized-audio-context";
 import { Coord, Feature, LineString, Point } from "@turf/helpers";
 import { PrefetchAudioType } from "./types";
@@ -9,7 +8,7 @@ import { ISpeakerData } from "./types/speaker";
  * Speakers can overlap, causing their audio to be mixed together accordingly.  Volume attenuation happens linearly over a specified distance from the edge of the Speaker’s defined zone.'
  * (quoted from https://github.com/loafofpiecrust/roundware-ios-framework-v2/blob/client-mixing/RWFramework/RWFramework/Playlist/Speaker.swift)
  * */
-export declare class SpeakerTrack implements ISpeakerTrack {
+export declare class SpeakerTrack {
     prefetch: PrefetchAudioType;
     audioContext: IAudioContext;
     speakerId: string;
@@ -57,3 +56,4 @@ export declare class SpeakerTrack implements ISpeakerTrack {
     pause(): Promise<void>;
     toString(): string;
 }
+//# sourceMappingURL=speaker_track.d.ts.map

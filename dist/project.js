@@ -51,6 +51,11 @@ var Project = /*#__PURE__*/function () {
     value: function toString() {
       return "Roundware Project '".concat(this.projectName, "' (#").concat(this.projectId, ")");
     }
+    /**
+     * @param  {number} sessionId
+     * @returns {Promise} sessionId | undefined
+     */
+
   }, {
     key: "connect",
     value: function () {
@@ -105,6 +110,11 @@ var Project = /*#__PURE__*/function () {
 
       return connect;
     }()
+    /**
+     * @param  {number} sessionId
+     * @returns Promise<IUiConfig>
+     */
+
   }, {
     key: "uiconfig",
     value: function () {

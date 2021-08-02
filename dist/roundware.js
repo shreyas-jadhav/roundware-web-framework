@@ -31,29 +31,9 @@ exports.Roundware = void 0;
 
 require("regenerator-runtime/runtime.js");
 
-var _project = require("./project");
-
-var _session = require("./session");
-
-var _speaker = require("./speaker");
-
-var _geoPosition = require("./geo-position");
-
-var _asset = require("./asset");
-
-var _timed_asset = require("./timed_asset");
-
-var _shims = require("./shims");
-
 var _apiClient = require("./api-client");
 
-var _user = require("./user");
-
-var _envelope = require("./envelope");
-
-var _mixer = require("./mixer");
-
-var _audiotrack = require("./audiotrack");
+var _asset = require("./asset");
 
 var _assetFilters = require("./assetFilters");
 
@@ -68,6 +48,26 @@ Object.keys(_assetFilters).forEach(function (key) {
     }
   });
 });
+
+var _audiotrack = require("./audiotrack");
+
+var _envelope = require("./envelope");
+
+var _geoPosition = require("./geo-position");
+
+var _mixer = require("./mixer");
+
+var _project = require("./project");
+
+var _session = require("./session");
+
+var _shims = require("./shims");
+
+var _speaker = require("./speaker");
+
+var _timed_asset = require("./timed_asset");
+
+var _user = require("./user");
 
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
@@ -490,7 +490,7 @@ var Roundware = /*#__PURE__*/function () {
                 }
 
                 _context5.next = 7;
-                return this._timed_asset.connect();
+                return this._timed_asset.connect({});
 
               case 7:
                 this._timedAssetData = _context5.sent;

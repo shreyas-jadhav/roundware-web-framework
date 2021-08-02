@@ -1,20 +1,19 @@
 import { TrackOptions } from "./mixer/TrackOptions";
-import { IPlaylistAudiotrack } from "./types/playlistAudioTrack";
-import { IAudioContext } from "standardized-audio-context";
+import { IAudioContext, IGainNode } from "standardized-audio-context";
 import { IAssetData, IMixParams } from "./types";
 import { IAudioTrackData } from "./types/audioTrack";
-import { IPlaylist } from "./types/playlist";
+import { Playlist } from "./playlist";
 import { ITrackStates } from "./types/track-states";
-export declare class PlaylistAudiotrack implements IPlaylistAudiotrack {
+export declare class PlaylistAudiotrack {
     trackId: any;
     timedAssetPriority: any;
-    playlist: any;
+    playlist: Playlist;
     playing: boolean;
     windowScope: Window;
     currentAsset: IAssetData | undefined;
     audioContext: IAudioContext;
     audioElement: HTMLAudioElement;
-    gainNode: any;
+    gainNode: IGainNode<IAudioContext> | undefined;
     trackOptions: TrackOptions;
     mixParams: IMixParams;
     state: ITrackStates | undefined;
@@ -22,7 +21,7 @@ export declare class PlaylistAudiotrack implements IPlaylistAudiotrack {
         audioContext: IAudioContext;
         windowScope: Window;
         audioData: IAudioTrackData;
-        playlist: IPlaylist;
+        playlist: Playlist;
     });
     setInitialTrackState(): void;
     onAudioError(evt?: any): void;
@@ -32,9 +31,9 @@ export declare class PlaylistAudiotrack implements IPlaylistAudiotrack {
     holdGain(): void;
     setZeroGain(): void;
     fadeIn(fadeInDurationSeconds: number): boolean;
-    rampGain(finalVolume: number, durationSeconds: number, rampMethod?: string): boolean;
-    fadeOut(fadeOutDurationSeconds: number): boolean;
-    loadNextAsset(): any;
+    rampGain(finalVolume: number, durationSeconds: number, rampMethod?: string): boolean | undefined;
+    fadeOut(fadeOutDurationSeconds: number): boolean | undefined;
+    loadNextAsset(): IAssetData | false | null;
     pause(): void;
     playAudio(): void;
     pauseAudio(): void;
@@ -43,3 +42,4 @@ export declare class PlaylistAudiotrack implements IPlaylistAudiotrack {
     transition(newState: ITrackStates): void;
     toString(): string;
 }
+//# sourceMappingURL=playlistAudioTrack.d.ts.map

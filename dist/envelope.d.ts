@@ -1,20 +1,21 @@
-import { IApiClient } from "./types/api-client";
-import { IRoundware } from "./types/roundware";
-import { IEnvelope } from "./types/envelope";
-import { IGeoPosition, IAudioData } from "./types";
-export declare class Envelope implements IEnvelope {
+import { ApiClient } from "./api-client";
+import { GeoPosition } from "./geo-position";
+import { Roundware } from "./roundware";
+import { IAudioData } from "./types";
+export declare class Envelope {
     _envelopeId: string;
     _sessionId: number | string;
-    _apiClient: IApiClient;
-    _geoPosition: IGeoPosition;
-    _roundware: IRoundware;
+    _apiClient: ApiClient;
+    _geoPosition: GeoPosition;
+    _roundware: Roundware;
     _assetId: string | undefined;
     /** Create an Envelope
      * @param {number} sessionId - identifies the session associated with this asset
      * @param {ApiClient} apiClient - the API client object to use for server API calls
      * @param {geoPosition} geoPosition -
+     * @param  {Roundware} roundware - roundware object
      **/
-    constructor(sessionId: number | string, apiClient: IApiClient, geoPosition: IGeoPosition, roundware: IRoundware);
+    constructor(sessionId: number | string, apiClient: ApiClient, geoPosition: GeoPosition, roundware: Roundware);
     /** @returns {String} human-readable representation of this asset **/
     toString(): string;
     /** Create a new Envelope in the server to which we can attach audio recordings as assets
@@ -33,3 +34,4 @@ export declare class Envelope implements IEnvelope {
         detail: string;
     }>;
 }
+//# sourceMappingURL=envelope.d.ts.map

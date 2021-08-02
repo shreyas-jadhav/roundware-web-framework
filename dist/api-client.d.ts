@@ -1,5 +1,5 @@
-import { IApiClient, ApiClientOptions } from "./types/api-client";
-export declare class ApiClient implements IApiClient {
+import { ApiClientOptions } from "./types/api-client";
+export declare class ApiClient {
     /** Create a new ApiClient
      * @param {String} baseServerUrl - identifies the Roundware server to receive API requests
      * @param {Boolean} [options.fetch = fetch] - for testing purposes, you can inject the fetch mechanism to use for making network requests **/
@@ -37,3 +37,4 @@ export declare class ApiClient implements IApiClient {
      * @param {String} authToken - characters to use in the authorization header **/
     set authToken(tokenStr: string);
 }
+//# sourceMappingURL=api-client.d.ts.map

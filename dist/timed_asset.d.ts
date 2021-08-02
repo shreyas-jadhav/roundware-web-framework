@@ -1,13 +1,16 @@
-import { ITimedAsset, ITimedAssetData } from "./types";
-import { IApiClient } from "./types/api-client";
-export declare class TimedAsset implements ITimedAsset {
+import { ITimedAssetData } from "./types";
+import { ApiClient } from "./api-client";
+export declare class TimedAsset {
     private _projectId;
     private _apiClient;
     constructor(projectId: number, { apiClient }: {
-        apiClient: IApiClient;
+        apiClient: ApiClient;
     });
     toString(): string;
-    connect({ ...data }: {
-        [x: string]: any;
-    }): Promise<ITimedAssetData[]>;
+    /**
+     * @param  {object} {...data}
+     * @returns Promise<ITimedAssetData[]>
+     */
+    connect({ ...data }: object | undefined): Promise<ITimedAssetData[]>;
 }
+//# sourceMappingURL=timed_asset.d.ts.map

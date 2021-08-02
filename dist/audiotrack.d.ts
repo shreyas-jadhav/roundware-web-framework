@@ -1,12 +1,12 @@
-import { IApiClient } from "./types/api-client";
-import { IAudioTrack } from "./types/audioTrack";
+import { ApiClient } from "./api-client";
 import { IAudioTrackData } from "./types/audioTrack";
-export declare class Audiotrack implements IAudioTrack {
+export declare class Audiotrack {
     private _projectId;
     private _apiClient;
     constructor(projectId: number, options: {
-        apiClient: IApiClient;
+        apiClient: ApiClient;
     });
     toString(): string;
     connect(data?: any): Promise<IAudioTrackData[]>;
 }
+//# sourceMappingURL=audiotrack.d.ts.map

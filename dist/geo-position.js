@@ -45,7 +45,7 @@ var accurateGeolocationPositionOptions = {
 
 var GeoPosition = /*#__PURE__*/function () {
   /** Create a new GeoPosition.
-   * @param {Object} navigator - provides access to geolocation system
+   * @param {Window[`navigator`]} navigator - provides access to geolocation system
    * @param {Object} options - parameters for initializing this GeoPosition
    * @param {Boolean} [options.geoListenMode = GeoListenMode.DISABLED] - whether or not to attempt to use geolocation
    * @param {Boolean} [options.defaultCoords] */
@@ -92,6 +92,10 @@ var GeoPosition = /*#__PURE__*/function () {
     value: function getLastCoords() {
       return this._lastCoords;
     }
+    /**
+     * @param  {CallableFunction} geoUpdateCallback
+     */
+
   }, {
     key: "connect",
     value: function connect(geoUpdateCallback) {
