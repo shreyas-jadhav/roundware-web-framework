@@ -3,8 +3,10 @@ import { Asset } from "../../src/asset";
 import {
   InvalidArgumentError,
   MissingArgumentError,
+  RoundwareConnectionError,
 } from "../../src/errors/app.errors";
-import { setupFetchMock } from "../fetch.setup";
+import { setupFetchMock, setupFetchWhichThrowsError } from "../fetch.setup";
+import { MOCK_ASSET_DATA } from "../__mocks__/mock_api_responses";
 import config from "../__mocks__/roundware.config";
 
 describe("Asset ", () => {
@@ -59,6 +61,29 @@ describe("Asset ", () => {
       expect(global.fetch).toBeCalledWith(
         "https://prod.roundware.com/api/2/assets/?method=GET&contentType=x-www-form-urlencoded&project_id=10",
         { headers: {}, method: "GET", mode: "cors" }
+      );
+    });
+
+    it("throws error if connection fails", async () => {
+      expect.assertions(1);
+      setupFetchWhichThrowsError();
+      try {
+        await asset.connect();
+      } catch (e) {
+        expect(e).toBeInstanceOf(RoundwareConnectionError);
+      }
+      setupFetchMock();
+    });
+    it("return assets data", async () => {
+      const data = await asset.connect();
+      expect(data).toEqual(MOCK_ASSET_DATA);
+    });
+    it("should fetch assets with given data", async () => {
+      const data = await asset.connect({
+        latitude: 42.4986343383789,
+      });
+      expect(data).toEqual(
+        MOCK_ASSET_DATA.filter((asset) => asset.latitude == 42.4986343383789)
       );
     });
   });
