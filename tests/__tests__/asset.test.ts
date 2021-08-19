@@ -47,4 +47,19 @@ describe("Asset ", () => {
       expect(asset).toBeInstanceOf(Asset);
     });
   });
+
+  describe(".connect()", () => {
+    const asset = new Asset(config.projectId, {
+      apiClient: new ApiClient(config.baseServerUrl),
+    });
+    it("should connect to roundware server", async () => {
+      expect.assertions(2);
+      const data = await asset.connect();
+      expect(global.fetch).toBeCalledTimes(1);
+      expect(global.fetch).toBeCalledWith(
+        "https://prod.roundware.com/api/2/assets/?method=GET&contentType=x-www-form-urlencoded&project_id=10",
+        { headers: {}, method: "GET", mode: "cors" }
+      );
+    });
+  });
 });
