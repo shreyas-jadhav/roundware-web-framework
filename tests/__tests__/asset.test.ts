@@ -1,5 +1,5 @@
 import { ApiClient } from "../../src/api-client";
-import { Asset } from "../../src/asset";
+import { Asset, PATH } from "../../src/asset";
 import {
   InvalidArgumentError,
   MissingArgumentError,
@@ -94,4 +94,11 @@ describe("Asset ", () => {
     });
     expect(asset.toString()).toEqual(`Roundware Assets (#${config.projectId})`);
   });
+
+  // it("add asset filter while in development mode", () => {
+  //   global.process.env.NODE_ENV = "production";
+  //   expect(PATH).toBe("/assets/");
+  //   global.process.env.NODE_ENV = "development";
+  //   expect(PATH).toBe("/assets/?created__lte=2019-08-15T18:06:39");
+  // });
 });
