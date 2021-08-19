@@ -80,7 +80,7 @@ describe("AssetPool", () => {
       },
     });
 
-    it("should throw error is passed data is not array", () => {
+    it(".updateAssets() should throw error is passed data is not array", () => {
       expect.assertions(1);
       try {
         // @ts-expect-error
@@ -90,7 +90,7 @@ describe("AssetPool", () => {
       }
     });
 
-    it("should decorate assets with timedAssets", () => {
+    it(".updateAssets() should decorate assets with timedAssets", () => {
       assetPool.assets = undefined;
 
       assetPool.updateAssets(MOCK_ASSET_DATA.reverse(), MOCK_TIMED_ASSET_DATA);
