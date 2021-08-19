@@ -36,18 +36,15 @@ describe("AssetPool", () => {
       expect(assetPool).toBeInstanceOf(AssetPool);
     });
 
-    // it("should update the assets", () => {
-    //   const mockFilterChain = (asset: IAssetData, mixParams: IMixParams) => 1;
-    //   const assetPool = new AssetPool({
-    //     assets: MOCK_ASSET_DATA,
-    //     timedAssets: MOCK_TIMED_ASSET_DATA,
-    //     filterChain: mockFilterChain,
-    //   });
+    it("should update the assets by decorating with timedAssets", () => {
+      const assetPool = new AssetPool({
+        assets: MOCK_ASSET_DATA,
+        timedAssets: MOCK_TIMED_ASSET_DATA,
+      });
 
-    //   expect(assetPool.assets).toEqual(
-    //     MOCK_ASSET_DATA.map(assetDecorationMapper(MOCK_TIMED_ASSET_DATA))
-    //   );
-    //   expect(assetPool.assetSorter).toBe(new AssetSorter({ sortMethods: [] }));
-    // });
+      expect(assetPool.assets).toEqual(
+        MOCK_ASSET_DATA.map(assetDecorationMapper(MOCK_TIMED_ASSET_DATA))
+      );
+    });
   });
 });
