@@ -1,5 +1,6 @@
 import { assetDecorationMapper, AssetPool } from "../../src/assetPool";
 import { AssetSorter } from "../../src/assetSorter";
+import { InvalidArgumentError } from "../../src/errors/app.errors";
 import { IAssetData, IMixParams } from "../../src/types";
 import { setupFetchMock } from "../fetch.setup";
 import {
@@ -10,6 +11,16 @@ import {
 describe("AssetPool", () => {
   setupFetchMock();
   describe("Instantiation", () => {
+    it("should throw error if passed assets are not array", () => {
+      expect.assertions(1);
+      try {
+        // @ts-expect-error
+        const assetPool = new AssetPool({ assets: "string" });
+      } catch (e) {
+        expect(e).toBeInstanceOf(InvalidArgumentError);
+      }
+    });
+
     it("should create an instance", () => {
       const assetPool = new AssetPool({});
       expect(assetPool).toBeInstanceOf(AssetPool);
