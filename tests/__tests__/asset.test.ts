@@ -87,4 +87,11 @@ describe("Asset ", () => {
       );
     });
   });
+
+  it(".toString() returns expected string", () => {
+    const asset = new Asset(config.projectId, {
+      apiClient: new ApiClient(config.baseServerUrl),
+    });
+    expect(asset.toString()).toEqual(`Roundware Assets (#${config.projectId})`);
+  });
 });
