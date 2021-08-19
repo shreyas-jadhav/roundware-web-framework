@@ -21,6 +21,16 @@ describe("AssetPool", () => {
       }
     });
 
+    it("shoud throw error if passed timedAssets are not an array", () => {
+      expect.assertions(1);
+      try {
+        // @ts-expect-error
+        const assetPool = new AssetPool({ timedAssets: "string" });
+      } catch (e) {
+        expect(e).toBeInstanceOf(InvalidArgumentError);
+      }
+    });
+
     it("should create an instance", () => {
       const assetPool = new AssetPool({});
       expect(assetPool).toBeInstanceOf(AssetPool);
