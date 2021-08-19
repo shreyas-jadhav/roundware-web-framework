@@ -70,7 +70,9 @@ export const setupFetchMock = () => {
           }
           if (
             input.toString() ==
-            "https://prod.roundware.com/api/2/assets/?method=GET&contentType=x-www-form-urlencoded&project_id=10&latitude=42.4986343383789"
+              "https://prod.roundware.com/api/2/assets/?method=GET&contentType=x-www-form-urlencoded&project_id=10&latitude=42.4986343383789" ||
+            input.toString() ==
+              "https://prod.roundware.com/api/2/assets/?method=GET&contentType=x-www-form-urlencoded&latitude=42.4986343383789&project_id=10"
           )
             return Promise.resolve(
               getResponse(
@@ -111,4 +113,10 @@ export function getResponse(input: RequestInfo, body?: object) {
     json: () => Promise.resolve(body),
   };
 }
+
+export const setupFetchWhichThrowsError = () => {
+  global.fetch = jest.fn(() => {
+    throw new Error();
+  });
+};
 setupFetchMock();
