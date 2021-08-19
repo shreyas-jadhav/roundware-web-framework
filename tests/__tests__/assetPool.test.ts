@@ -69,4 +69,34 @@ describe("AssetPool", () => {
       expect(assetPool.assetSorter).toEqual(expectedAssetSorter);
     });
   });
+
+  describe("Methods", () => {
+    const assetPool = new AssetPool({
+      assets: MOCK_ASSET_DATA,
+      timedAssets: MOCK_TIMED_ASSET_DATA,
+
+      mixParams: {
+        ordering: "by_like",
+      },
+    });
+
+    it("should throw error is passed data is not array", () => {
+      expect.assertions(1);
+      try {
+        // @ts-expect-error
+        assetPool.updateAssets("string", "string1");
+      } catch (e) {
+        expect(e).toBeInstanceOf(InvalidArgumentError);
+      }
+    });
+
+    it("should decorate assets with timedAssets", () => {
+      assetPool.assets = undefined;
+
+      assetPool.updateAssets(MOCK_ASSET_DATA.reverse(), MOCK_TIMED_ASSET_DATA);
+      expect(assetPool.assets).toEqual(
+        MOCK_ASSET_DATA.map(assetDecorationMapper(MOCK_TIMED_ASSET_DATA))
+      );
+    });
+  });
 });
