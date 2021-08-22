@@ -22,7 +22,6 @@ export class ApiClient {
    */
 
   constructor(baseServerUrl: string) {
-
     if (typeof baseServerUrl !== "string")
       throw new InvalidArgumentError(
         "baseServerUrl",
@@ -97,6 +96,7 @@ export class ApiClient {
       case "GET":
       case "HEAD":
         for (let key in data) queryParams.append(key, data[key]);
+        delete requestInit.body;
         break;
       // for other HTTP methods, 'data' has to be turned into a request body, with a properly-set Content-Type required by the Roundware server API.
       default:
@@ -126,9 +126,6 @@ export class ApiClient {
     let response;
 
     try {
-      if (method == "GET") {
-        delete requestInit.body;
-      }
       response = await fetch(url.toString(), requestInit);
     } catch (error) {
       console.error("Roundware network error:", error.message);

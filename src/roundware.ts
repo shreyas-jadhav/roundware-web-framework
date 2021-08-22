@@ -9,6 +9,7 @@ import {
   InvalidArgumentError,
   MissingArgumentError,
   RoundwareConnectionError,
+  RoundwareFrameworkError,
 } from "./errors/app.errors";
 import { GeoPosition } from "./geo-position";
 import { GeoListenMode, Mixer } from "./mixer";
@@ -210,6 +211,10 @@ export class Roundware {
     this.project = project || new Project(this._projectId, options);
     this._speaker = speaker || new Speaker(this._projectId, options);
     this._asset = asset || new Asset(this._projectId, options);
+    if (!this._asset)
+      throw new RoundwareFrameworkError(
+        "Failed to connect to assets! Please try again."
+      );
     this._timed_asset = timedAsset || new TimedAsset(this._projectId, options);
     this._audiotrack = audiotrack || new Audiotrack(this._projectId, options);
     this.uiConfig = {};
@@ -391,6 +396,7 @@ export class Roundware {
     if (typeof this._onUpdateAssets == "function") {
       this._onUpdateAssets(this.assetData);
     }
+
     Promise.resolve();
   }
 
@@ -405,7 +411,7 @@ export class Roundware {
       await this.updateAssetPool();
       // Setup periodic retrieval of newly uploaded assets.
       this._assetDataTimer = setInterval(
-        this.updateAssetPool,
+        () => this.updateAssetPool(),
         this._assetUpdateInterval
       );
     }
@@ -427,15 +433,17 @@ export class Roundware {
     };
 
     this.mixer.initContext();
-    this.mixer.updateParams(allMixParams, this.assets(), this.timedAssets());
+    this.mixer.updateParams(allMixParams);
 
+    console.info("Mixer activated!");
     return this.mixer;
   }
 
   /** Create or resume the audio stream
    * @see Mixer.toogle **/
-  play() {
-    return this.mixer.toggle(true);
+  play(firstPlayCallback: (value: Coordinates) => any = () => {}) {
+    console.log("Playing...");
+    return this.geoPosition.waitForInitialGeolocation().then(firstPlayCallback);
   }
 
   /** Tell Roundware server to pause the audio stream. You should always call this when the local audio player has been paused.
