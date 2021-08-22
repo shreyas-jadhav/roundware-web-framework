@@ -281,7 +281,7 @@ describe("Roundware", () => {
       });
 
       it("update assetPool assets with decoration", async () => {
-        expect(roundware.assetPool.assets).toEqual([]);
+        expect(roundware.assetPool.assets).toEqual(undefined);
         await roundware.updateAssetPool();
         expect(roundware.assetPool.assets).toEqual(
           MOCK_ASSET_DATA.map(assetDecorationMapper(MOCK_TIMED_ASSET_DATA))
@@ -359,7 +359,7 @@ describe("Roundware", () => {
       });
 
       it("loads asset pool with decorated assets", async () => {
-        expect(roundware.assetPool.assets).toEqual([]);
+        expect(roundware.assetPool.assets).toEqual(undefined);
         await roundware.loadAssetPool();
 
         expect(roundware.assetPool.assets).toEqual(
@@ -374,7 +374,7 @@ describe("Roundware", () => {
         await roundware.loadAssetPool();
         expect(setInterval).toHaveBeenCalledTimes(1);
         expect(setInterval).toHaveBeenLastCalledWith(
-          roundware.updateAssetPool,
+          expect.any(Function),
           // @ts-ignore
           roundware._assetUpdateInterval
         );
@@ -392,7 +392,7 @@ describe("Roundware", () => {
 
         expect(setInterval).toHaveBeenCalledTimes(1);
         expect(setInterval).toHaveBeenLastCalledWith(
-          roundware.updateAssetPool,
+          expect.any(Function),
           // @ts-ignore
           roundware._assetUpdateInterval
         );
