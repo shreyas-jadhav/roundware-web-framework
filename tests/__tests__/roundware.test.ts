@@ -114,12 +114,12 @@ describe("Roundware", () => {
       expect(Array.isArray(assets)).toBe(true);
     });
 
-    it(".connect() - should successfully connect return promise of uiConfig", async () => {
+    it("#connect() - should successfully connect return promise of uiConfig", async () => {
       const data = await roundware.connect();
       expect(data.uiConfig).toMatchObject(MOCK_PROJECT_UICONFIG_DATA);
     });
 
-    it(".connect() - should throw error when unale to fetch", async () => {
+    it("#connect() - should throw error when unale to fetch", async () => {
       global.fetch = jest.fn((input, init) => {
         throw Error();
       });
@@ -130,7 +130,7 @@ describe("Roundware", () => {
       }
     });
 
-    it(".connect() - should call updateLocation", async () => {
+    it("#connect() - should call updateLocation", async () => {
       const updateLocationCallback = jest.fn((coordinates) => {});
       roundware.onUpdateLocation = updateLocationCallback;
       await roundware.connect();
@@ -145,7 +145,7 @@ describe("Roundware", () => {
       latitude: 20,
       longitude: 43,
     };
-    it(".updateLocation() - update location in mixer", () => {
+    it("#updateLocation() - update location in mixer", () => {
       roundware.updateLocation(MOCK_LOCATION);
 
       const mixerListenerPoint = coordsToPoints(MOCK_LOCATION);
@@ -154,7 +154,7 @@ describe("Roundware", () => {
       );
     });
 
-    it(".onUpdateLocation() - should execute callback with listenerLocation when passed", () => {
+    it("#onUpdateLocation() - should execute callback with listenerLocation when passed", () => {
       const onLocationUpdateCallback = jest.fn();
       roundware.onUpdateLocation = onLocationUpdateCallback;
       expect(onLocationUpdateCallback).toBeCalledTimes(1);
@@ -166,7 +166,7 @@ describe("Roundware", () => {
       expect(onLocationUpdateCallback).toHaveBeenLastCalledWith(MOCK_LOCATION);
     });
 
-    it("onUpdateAssets() - called when assets are updated", async () => {
+    it("#onUpdateAssets() - called when assets are updated", async () => {
       const onUpdateAssetsCallback = jest.fn();
       roundware.onUpdateAssets = onUpdateAssetsCallback;
       expect(onUpdateAssetsCallback).toHaveBeenCalledTimes(0);
@@ -180,7 +180,7 @@ describe("Roundware", () => {
 
     const onPlayAssetsCallback = jest.fn();
 
-    it(".onPlayAssets() - should set the callback and return currently playing assets", () => {
+    it("#onPlayAssets() - should set the callback and return currently playing assets", () => {
       roundware.onPlayAssets = onPlayAssetsCallback;
       expect(onPlayAssetsCallback).toBeCalledTimes(1);
       expect(onPlayAssetsCallback).toHaveBeenLastCalledWith(
@@ -188,7 +188,7 @@ describe("Roundware", () => {
       );
     });
 
-    it(".triggerOnPlayAsset() - should trigger callback call when onPlayAssets set", () => {
+    it("#triggerOnPlayAsset() - should trigger callback call when onPlayAssets set", () => {
       roundware.triggerOnPlayAssets();
       expect(onPlayAssetsCallback).toBeCalledTimes(2);
       expect(onPlayAssetsCallback).toHaveBeenLastCalledWith(
@@ -201,7 +201,7 @@ describe("Roundware", () => {
       );
     });
 
-    it(".currentlyPlayingAssets should return currently playing assets or warn", async () => {
+    it("#currentlyPlayingAssets should return currently playing assets or warn", async () => {
       jest.spyOn(console, "warn").mockImplementation(() => {});
 
       let cpa = roundware.currentlyPlayingAssets;
@@ -215,12 +215,12 @@ describe("Roundware", () => {
       // expect(cpa).not.toBeUndefined();
     });
 
-    it("getAssets() return already existing assets when no filter passed", async () => {
+    it("#getAssets() return already existing assets when no filter passed", async () => {
       const assets = await roundware.getAssets();
       expect(assets).toEqual(roundware.assetData);
     });
 
-    it("getAssets() fetch assets from filter", async () => {
+    it("#getAssets() fetch assets from filter", async () => {
       const assets = await roundware.getAssets({
         latitude: 42.4986343383789,
       });
@@ -229,7 +229,7 @@ describe("Roundware", () => {
       );
     });
 
-    describe(".updateAssetPool()", () => {
+    describe("#updateAssetPool()", () => {
       let roundware;
       beforeEach(() => {
         const options: IRoundwareConstructorOptions = {
@@ -289,7 +289,7 @@ describe("Roundware", () => {
       });
     });
 
-    it(".getAssetsFromPool() Returns a reduced asset list by filtering the overall pool.", async () => {
+    it("#getAssetsFromPool() Returns a reduced asset list by filtering the overall pool.", async () => {
       let assets = await roundware.getAssetsFromPool(() => true);
       expect(assets).toEqual(MOCK_ASSET_DATA);
       assets = await roundware.getAssetsFromPool(
@@ -326,7 +326,7 @@ describe("Roundware", () => {
       ]);
     });
 
-    describe(".loadAssetPool() must load assetPool", () => {
+    describe("#loadAssetPool() must load assetPool", () => {
       let roundware;
 
       beforeEach(() => {
@@ -407,7 +407,7 @@ describe("Roundware", () => {
       });
     });
 
-    describe(".audiotrack() should return audio tracks", () => {
+    describe("#audiotrack() should return audio tracks", () => {
       const roundware2 = new Roundware(global.window, options);
       it("return empty when called before connect", () => {
         expect(roundware2.audiotracks()).toEqual([]);
