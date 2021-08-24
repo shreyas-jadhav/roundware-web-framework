@@ -81,18 +81,22 @@ describe("AssetPool", () => {
       },
     });
 
-    describe("#updateAssets()", () => {
-      it("should throw error is passed data is not array", () => {
-        expect.assertions(1);
-        try {
-          // @ts-expect-error
-          assetPool.updateAssets("string", "string1");
-        } catch (e) {
-          expect(e).toBeInstanceOf(InvalidArgumentError);
-        }
-      });
+    it(".updateAssets() should throw error is passed data is not array", () => {
+      expect.assertions(1);
+      try {
+        // @ts-expect-error
+        assetPool.updateAssets("string", "string1");
+      } catch (e) {
+        expect(e).toBeInstanceOf(InvalidArgumentError);
+      }
+    });
 
-      let DECORATED_ASSETS = [
+    it(".updateAssets() should decorate assets with timedAssets", () => {
+      assetPool.assets = undefined;
+
+      assetPool.updateAssets(MOCK_ASSET_DATA.reverse(), MOCK_TIMED_ASSET_DATA);
+      console.log(assetPool.assets);
+      expect(assetPool.assets).toEqual([
         {
           locationPoint: coordsToPoints({
             latitude: 1,
@@ -195,32 +199,7 @@ describe("AssetPool", () => {
           description_loc_ids: [],
           alt_text_loc_ids: [],
         },
-      ];
-      it("should decorate assets with timedAssets", () => {
-        assetPool.assets = undefined;
-
-        assetPool.updateAssets(
-          MOCK_ASSET_DATA.reverse(),
-          MOCK_TIMED_ASSET_DATA
-        );
-
-        expect(assetPool.assets).toEqual(DECORATED_ASSETS);
-      });
-
-      it("should preserve the playCount of previous assets", () => {
-        expect.hasAssertions();
-        assetPool.updateAssets(MOCK_ASSET_DATA, MOCK_TIMED_ASSET_DATA);
-        const modifiedAssets = assetPool.assets.map((asset) => ({
-          ...asset,
-          playCount: Math.random(),
-        }));
-        assetPool.assets = modifiedAssets;
-        assetPool.updateAssets(MOCK_ASSET_DATA, MOCK_TIMED_ASSET_DATA);
-        assetPool.assets.forEach((asset) => {
-          const existing = modifiedAssets.find((a) => a.id == asset.id);
-          if (existing) expect(asset.playCount).toBe(existing.playCount);
-        });
-      });
+      ]);
     });
   });
 });
