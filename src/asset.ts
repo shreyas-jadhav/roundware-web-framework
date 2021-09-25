@@ -1,3 +1,4 @@
+import * as localforage from "localforage";
 import { ApiClient } from "./api-client";
 import {
   InvalidArgumentError,
@@ -44,7 +45,43 @@ export class Asset {
   }
 
   async connect(data: IAssetFilters = {}): Promise<IAssetData[]> {
-    const options = { ...data, project_id: this._projectId };
-    return await this._apiClient.get<IAssetData[]>(PATH, options);
+    // 1. check if data exists in localforage
+    // 2. check last fetched data
+    // 3. make new request with created_gte as last fetch
+    // 4. concat with stored asset data
+    // 5. update last fetched in localforage
+
+    let options: IAssetFilters = { ...data, project_id: this._projectId };
+
+    if (!options.created__gte) {
+      const lastUpdated = await localforage.getItem<string>("assetLastUpdated");
+      if (lastUpdated) {
+        options = {
+          ...options,
+          created__gte: lastUpdated,
+        };
+      }
+      const assetData = await this._apiClient.get<IAssetData[]>(PATH, options);
+      return await this.updateLocalAssetData(assetData);
+    }
+
+    const assetData = await this._apiClient.get<IAssetData[]>(PATH, options);
+    this.updateLocalAssetData(assetData);
+    return assetData;
+  }
+
+  async updateLocalAssetData(assetData: IAssetData[]): Promise<IAssetData[]> {
+    const storageAssetData = await localforage.getItem("assetData");
+    if (Array.isArray(storageAssetData)) {
+      assetData.forEach((asset) => {
+        if (!storageAssetData.some((a) => a.id === asset.id))
+          storageAssetData.push(asset);
+      });
+      await localforage.removeItem("assetData");
+      await localforage.setItem("assetData", storageAssetData);
+      console.info("cached asset data!");
+    } else await localforage.setItem("assetData", assetData);
+    await localforage.setItem("assetLastUpdated", new Date().toISOString());
+    return (await localforage.getItem("assetData")) || assetData;
   }
 }
