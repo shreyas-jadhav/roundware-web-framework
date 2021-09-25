@@ -66,6 +66,7 @@
     "@turf/distance": "^6.5.0",
     "@turf/line-to-polygon": "^6.5.0",
     "@turf/point-to-line-distance": "^6.5.0",
+    "localforage": "^1.10.0",
     "loglevel": "^1.7.1",
     "standardized-audio-context": "^25.3.9"
   },
