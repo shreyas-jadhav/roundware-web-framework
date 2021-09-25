@@ -57,7 +57,9 @@ export interface IAssetData {
     | Feature<Point>;
 }
 
-export interface IAssetFilters extends Partial<IAssetData> {}
+export interface IAssetFilters extends Partial<IAssetData> {
+  created__gte?: string;
+}
 export interface IDecoratedAsset extends IAssetData {
   activeRegionLowerBound: number;
   timedAssetStart?: number;
