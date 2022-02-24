@@ -152,7 +152,6 @@ export const makeAudioSafeToPlay = (
         try {
           audioElement.play().catch((e) => {
             audioElement.src = expectedSourceAfter || silenceAudioBase64;
-            console.error(`failed to make safe`, e, expectedSourceAfter);
             onSuccess();
           });
           audioElement.addEventListener(

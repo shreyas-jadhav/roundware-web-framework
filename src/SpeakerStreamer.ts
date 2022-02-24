@@ -219,4 +219,5 @@ export class SpeakerStreamer implements ISpeakerPlayer {
   replay(): void {
     this.audio.fastSeek(0);
   }
+  updateTime(newTime: number): void {}
 }

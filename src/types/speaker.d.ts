@@ -35,6 +35,7 @@ export interface ISpeakerPlayer {
   log(string: string): void;
   onLoadingProgress(callback: (newPercent: number) => void): void;
   onEnd(callback: () => void): void;
+  updateTime(newTime: number): void;
 }
 
 export type SpeakerConstructor = {

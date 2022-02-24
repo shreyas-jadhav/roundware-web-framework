@@ -18,7 +18,7 @@ export class SpeakerPrefetchPlayer implements ISpeakerPlayer {
   gainNode: IGainNode<IAudioContext>;
   context: IAudioContext;
   config: SpeakerConfig;
-  loadedPercentage = 0;
+  loadedPercentage = 1;
 
   buffer?: IAudioBuffer;
 
@@ -33,33 +33,37 @@ export class SpeakerPrefetchPlayer implements ISpeakerPlayer {
     var request = new XMLHttpRequest();
 
     request.open("GET", uri, true);
-    request.timeout = Infinity;
+
     request.responseType = "arraybuffer";
     request.onprogress = (ev) => {
       this.loadedPercentage = Number(((ev.loaded / ev.total) * 100).toFixed(2));
 
       this.loadingCallback(this.loadedPercentage);
     };
+
     const speakerContext = this;
-    request.onload = function () {
-      var audioData = request.response;
-
-      audioContext.decodeAudioData(
-        audioData,
-        function (buffer) {
-          speakerContext.buffer = buffer;
-
-          speakerContext.loaded = true;
-          speakerContext.log(`loaded successfully`);
-        },
-
-        function (e) {
-          speakerContext.log("Error with decoding audio data " + e.message);
-        }
-      );
+    request.onload = async function () {
+      console.info(`xml, aboout to get audio data`);
+      const audioData = request.response;
+      await speakerContext.decodeBuffer(audioData);
     };
 
     request.send();
+  }
+  updateTime(newTime: number): void {
+    // throw new Error("Method not implemented.");
+  }
+
+  async decodeBuffer(arraybuffer: ArrayBuffer): Promise<void> {
+    try {
+      const buffer = await this.context.decodeAudioData(arraybuffer);
+      this.buffer = buffer;
+
+      this.loaded = true;
+      this.log(`loaded successfully`);
+    } catch (e) {
+      console.error(`Failed to decode speaker ${this.id}`);
+    }
   }
 
   started = false;

@@ -16,6 +16,7 @@ import { SpeakerPrefetchPlayer } from "./SpeakerPrefetchPlayer";
 import { ISpeakerData, ISpeakerPlayer } from "./types/speaker";
 import { speakerLog } from "./utils";
 import { SpeakerConfig } from "./types/roundware";
+import { SpeakerSyncStreamer } from "./SpeakerSyncStreamer";
 
 const convertLinesToPolygon = (shape: any): Polygon | MultiPolygon =>
   // @ts-ignore
@@ -143,7 +144,6 @@ export class SpeakerTrack {
     }
 
     if (isPlaying == false) {
-      this.player.log(`pausing because mixer is off`);
       this.player.fadeOutAndPause();
       return;
     }
@@ -152,10 +152,8 @@ export class SpeakerTrack {
 
     if (newVolume < 0.05) {
       // allow to fade before pausing
-      this.player.log(`pausing because new volume is lower than 0.05`);
       this.player.fadeOutAndPause();
     } else {
-      this.player.log(`new volume ${newVolume}`);
       this.play();
       this.updateVolume();
     }
@@ -203,7 +201,11 @@ export class SpeakerTrack {
   }
 
   initPlayer() {
-    const Player = this.config.sync ? SpeakerPrefetchPlayer : SpeakerStreamer;
+    const Player = this.config.sync
+      ? this.config.prefetch
+        ? SpeakerPrefetchPlayer
+        : SpeakerSyncStreamer
+      : SpeakerStreamer;
     this.player = new Player({
       audioContext: this.audioContext,
       id: this.speakerId,

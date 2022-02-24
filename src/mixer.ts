@@ -2,7 +2,9 @@ import { IAudioContext } from "standardized-audio-context";
 import { AssetPool } from "./assetPool";
 import { Playlist } from "./playlist";
 import { Roundware } from "./roundware";
+import { SpeakerState, SpeakerSyncStreamer } from "./SpeakerSyncStreamer";
 import { SpeakerTrack } from "./speaker_track";
+import { Timer } from "./Timer";
 import {
   Coordinates,
   GeoListenModeType,
@@ -34,7 +36,7 @@ export class Mixer {
   assetPool: AssetPool;
   speakerTracks: SpeakerTrack[] | undefined;
   audioContext: IAudioContext;
-
+  timer: Timer;
   constructor({
     client,
     windowScope,
@@ -75,6 +77,44 @@ export class Mixer {
       mixParams: this.mixParams,
     });
     this.audioContext = buildAudioContext(this._windowScope);
+
+    this.timer = new Timer();
+    this.setupSpeakerTimer();
+  }
+
+  speakerStates = new Map<number, SpeakerState>();
+  setupSpeakerTimer() {
+    if (
+      this?.mixParams?.speakerConfig?.sync != true &&
+      this.mixParams.speakerConfig?.prefetch != true
+    ) {
+      return;
+    }
+
+    if (!Array.isArray(this.speakerTracks)) return;
+    const that = this;
+    this.timer.onTimeUpdate = (newTimeMs) => {
+      this.speakerTracks?.forEach(({ player }) => {
+        if (Math.abs(player.audio.currentTime * 1000 - newTimeMs) > 150)
+          player.updateTime(newTimeMs / 1000);
+        console.log(`speaker states`, Array.from(that.speakerStates.values()));
+        if (
+          Array.from(that.speakerStates.values()).some((v) => v == "waiting")
+        ) {
+          that.timer.pause();
+        } else if (that.playing) {
+          that.timer.start();
+        }
+      });
+    };
+
+    this.speakerTracks.forEach(({ player, speakerId }) => {
+      if (player instanceof SpeakerSyncStreamer) {
+        player.onStateUpdate((newState) => {
+          that.speakerStates.set(speakerId, newState);
+        });
+      }
+    });
   }
 
   updateParams({ listenerLocation, ...params }: IMixParams) {
